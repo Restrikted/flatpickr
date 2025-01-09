@@ -324,6 +324,10 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
       }
     }
 
+    function redraw() {
+      buildMonths();
+    }
+
     return {
       onParseConfig() {
         fp.config.enableTime = false;
@@ -350,6 +354,9 @@ function monthSelectPlugin(pluginConfig?: Partial<Config>): Plugin {
           );
         },
       ],
+      onMinMaxDateChanged: [
+          redraw
+      ]
     };
   };
 }

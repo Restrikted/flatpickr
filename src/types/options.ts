@@ -27,7 +27,8 @@ export type HookKey =
   | "onReady"
   | "onValueUpdate"
   | "onYearChange"
-  | "onPreCalendarPosition";
+  | "onPreCalendarPosition"
+  | "onMinMaxDateChanged";
 
 export const HOOKS: HookKey[] = [
   "onChange",
@@ -42,6 +43,7 @@ export const HOOKS: HookKey[] = [
   "onValueUpdate",
   "onYearChange",
   "onPreCalendarPosition",
+  "onMinMaxDateChanged"
 ];
 
 export type Plugin<E = {}> = (fp: Instance & E) => Options;
@@ -218,6 +220,9 @@ Use it along with "enableTime" to create a time picker. */
 
   onPreCalendarPosition: Hook | Hook[];
 
+  /* Fires after the min or max date has been changed */
+  onMinMaxDateChanged: Hook | Hook[];
+
   /* A custom datestring parser */
   parseDate: (date: string, format: string) => Date;
 
@@ -328,6 +333,7 @@ export interface ParsedOptions {
   onValueUpdate: Hook[];
   onYearChange: Hook[];
   onPreCalendarPosition: Hook[];
+  onMinMaxDateChanged: Hook[];
   parseDate?: BaseOptions["parseDate"];
   plugins: Plugin[];
   position: BaseOptions["position"];
@@ -410,6 +416,7 @@ export const defaults: ParsedOptions = {
   onValueUpdate: [],
   onYearChange: [],
   onPreCalendarPosition: [],
+  onMinMaxDateChanged: [],
   plugins: [],
   position: "auto",
   positionElement: undefined,

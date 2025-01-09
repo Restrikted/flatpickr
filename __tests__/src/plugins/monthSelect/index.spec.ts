@@ -204,6 +204,40 @@ describe("monthSelect", () => {
         expect(getSelectedCell()?.textContent).toEqual("June");
       });
     });
+
+    describe("with minDate/maxDate change", () => {
+      const getMonthCells = (instance?: Instance): NodeListOf<Element> => {
+        return (instance || fp()).rContainer!.querySelectorAll(
+            ".flatpickr-monthSelect-month"
+        )!;
+      };
+
+      const thisYear = new Date().getFullYear();
+
+      it('minDate changes triggers redraw and disables', () => {
+        fp().config.minDate = new Date(`${thisYear}-3`);
+
+        const monthCells = getMonthCells();
+
+        expect(monthCells[0].classList).toContain("flatpickr-disabled");
+        expect(monthCells[1].classList).toContain("flatpickr-disabled");
+        expect(monthCells[2].classList).not.toContain("flatpickr-disabled");
+        expect(monthCells[3].classList).not.toContain("flatpickr-disabled");
+        expect(monthCells[4].classList).not.toContain("flatpickr-disabled");
+      });
+
+      it('maxDate changes triggers redraw and disables', () => {
+        fp().config.maxDate = new Date(`${thisYear}-3`);
+
+        const monthCells = getMonthCells();
+
+        expect(monthCells[0].classList).not.toContain("flatpickr-disabled");
+        expect(monthCells[1].classList).not.toContain("flatpickr-disabled");
+        expect(monthCells[2].classList).not.toContain("flatpickr-disabled");
+        expect(monthCells[3].classList).toContain("flatpickr-disabled");
+        expect(monthCells[4].classList).toContain("flatpickr-disabled");
+      })
+    })
   });
 
   describe("range mode", () => {

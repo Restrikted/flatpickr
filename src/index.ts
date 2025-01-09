@@ -1987,6 +1987,8 @@ function FlatpickrInstance(
           dateObj !== undefined &&
           inverseDateObj.getFullYear() === dateObj.getFullYear();
       }
+
+      triggerEvent("onMinMaxDateChanged");
     };
   }
 
